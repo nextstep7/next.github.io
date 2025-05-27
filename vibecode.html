@@ -1,14 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>vibe coding - My Simple Blog</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>first blog post - My Simple Blog</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #000000; color: #ffff00; font-family: Arial, sans-serif; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #ffff00; padding-bottom: 20px; }
+        .site-title { font-size: 1.8em; margin-bottom: 10px; }
+        .site-title a { color: #ffff00; text-decoration: none; }
+        .site-title a:hover { text-decoration: underline; }
+        nav { text-align: center; margin-bottom: 40px; }
+        nav a { color: #ffff00; text-decoration: none; margin: 0 20px; font-size: 1.1em; border: 1px solid #ffff00; padding: 8px 16px; transition: all 0.3s ease; }
+        nav a:hover { background-color: #ffff00; color: #000000; }
+        .back-button { margin-bottom: 30px; }
+        .back-button a { color: #ffff00; text-decoration: none; border: 1px solid #ffff00; padding: 8px 16px; transition: all 0.3s ease; }
+        .back-button a:hover { background-color: #ffff00; color: #000000; }
+        .post { background-color: #111111; border: 1px solid #ffff00; padding: 30px; }
+        .post-title { font-size: 2.2em; margin-bottom: 15px; color: #ffff00; }
+        .post-meta { font-size: 0.9em; opacity: 0.7; margin-bottom: 25px; border-bottom: 1px dotted #ffff00; padding-bottom: 15px; }
+        .post-content { font-size: 1.1em; }
+        .post-content p { margin-bottom: 20px; }
+        .post-content h2 { color: #ffff00; margin-top: 30px; margin-bottom: 15px; font-size: 1.5em; }
+        .post-content h3 { color: #ffff00; margin-top: 25px; margin-bottom: 10px; font-size: 1.3em; }
+        .post-content ul, .post-content ol { margin-left: 30px; margin-bottom: 20px; }
+        .post-content li { margin-bottom: 8px; }
+        footer { text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #ffff00; opacity: 0.7; }
+    </style>
 </head>
-<body style="background-color: #000; color: #ff0; font-family: Arial; padding: 20px;">
-  <h1 class="post-title">vibe coding</h1>
-  <div class="post-meta">Posted on May 27, 2025 | By Me</div>
-  <div class="post-content">
+<body>
+    <div class="container">
+        <header>
+            <h1 class="site-title"><a href="index.html">My Simple Blog</a></h1>
+        </header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="back-button">
+            <a href="index.html">← Back to All Posts</a>
+        </div>
+        <article class="post">
+            <h1 class="post-title">first blog post</h1>
+            <div class="post-meta">Posted on May 27, 2025 | By Me</div>
+            <div class="post-content">
 Hi,
 How about<br> 
 <br>
@@ -22,5 +60,12 @@ Please reuse, get inspired and most important of all:<br>
 <br>
 Get going and start now!<br>
   </div>
+</body>
+</html>            </div>
+        </article>
+        <footer>
+            <p>&copy; 2025 My Simple Blog. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>
