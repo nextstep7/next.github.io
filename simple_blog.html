@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Simple Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffff00;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #ffff00;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+
+        nav {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        nav a {
+            color: #ffff00;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 1.1em;
+            border: 1px solid #ffff00;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #ffff00;
+            color: #000000;
+        }
+
+        .blog-post {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #ffff00;
+            background-color: #111111;
+        }
+
+        .post-title {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #ffff00;
+        }
+
+        .post-meta {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+
+        .post-content {
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            color: #ffff00;
+            text-decoration: none;
+            border-bottom: 1px dotted #ffff00;
+        }
+
+        .read-more:hover {
+            background-color: #ffff00;
+            color: #000000;
+            text-decoration: none;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #ffff00;
+            opacity: 0.7;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .back-button {
+            margin-bottom: 20px;
+        }
+
+        .back-button a {
+            color: #ffff00;
+            text-decoration: none;
+            border: 1px solid #ffff00;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button a:hover {
+            background-color: #ffff00;
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <header>
+                <h1>My Simple Blog</h1>
+                <p class="tagline">Sharing thoughts in yellow on black</p>
+            </header>
+
+            <nav>
+                <a href="#" onclick="showPage('home')">Home</a>
+                <a href="#" onclick="showPage('about')">About</a>
+                <a href="#" onclick="showPage('contact')">Contact</a>
+            </nav>
+
+            <main>
+                <article class="blog-post">
+                    <h2 class="post-title">Welcome to My Blog</h2>
+                    <div class="post-meta">Posted on May 27, 2025 | By Me</div>
+                    <div class="post-content">
+                        <p>This is my first blog post! I've created this simple website with a black background and yellow text for easy reading. This minimalist design helps focus on the content without distractions.</p>
+                        <p>I'll be sharing my thoughts, experiences, and insights here regularly. Stay tuned for more interesting posts!</p>
+                    </div>
+                    <a href="#" class="read-more">Read more...</a>
+                </article>
+
+                <article class="blog-post">
+                    <h2 class="post-title">Why I Chose This Design</h2>
+                    <div class="post-meta">Posted on May 26, 2025 | By Me</div>
+                    <div class="post-content">
+                        <p>The black and yellow color scheme isn't just about aesthetics - it's about readability and reducing eye strain. The high contrast makes text easy to read, especially in low-light conditions.</p>
+                        <p>This retro terminal-style look also gives the blog a unique personality that stands out from typical white-background websites.</p>
+                    </div>
+                    <a href="#" class="read-more">Read more...</a>
+                </article>
+
+                <article class="blog-post">
+                    <h2 class="post-title">Getting Started with Blogging</h2>
+                    <div class="post-meta">Posted on May 25, 2025 | By Me</div>
+                    <div class="post-content">
+                        <p>Starting a blog can seem overwhelming, but it doesn't have to be complicated. Sometimes the simplest approach is the best approach.</p>
+                        <p>Focus on your content first, and keep the design clean and functional. Your readers are here for your thoughts and ideas!</p>
+                    </div>
+                    <a href="#" class="read-more">Read more...</a>
+                </article>
+            </main>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page">
+            <div class="back-button">
+                <a href="#" onclick="showPage('home')">← Back to Home</a>
+            </div>
+            
+            <header>
+                <h1>About Me</h1>
+            </header>
+
+            <main>
+                <div class="blog-post">
+                    <h2 class="post-title">Who Am I?</h2>
+                    <div class="post-content">
+                        <p>Welcome to my corner of the internet! I'm a blogger who believes in the power of simple, clean design and meaningful content.</p>
+                        
+                        <p>This blog is my space to share thoughts, experiences, and insights on various topics that interest me. I chose the classic black and yellow theme because it's easy on the eyes and gives the site a distinctive, terminal-inspired look.</p>
+                        
+                        <p>When I'm not writing, I enjoy exploring new technologies, reading, and finding inspiration in everyday moments.</p>
+                        
+                        <p>Thanks for stopping by, and I hope you find something here that resonates with you!</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <div class="back-button">
+                <a href="#" onclick="showPage('home')">← Back to Home</a>
+            </div>
+            
+            <header>
+                <h1>Contact Me</h1>
+            </header>
+
+            <main>
+                <div class="blog-post">
+                    <h2 class="post-title">Get In Touch</h2>
+                    <div class="post-content">
+                        <p>I'd love to hear from you! Whether you have a question, want to share your thoughts on a post, or just want to say hello, feel free to reach out.</p>
+                        
+                        <p><strong>Email:</strong> your.email@example.com</p>
+                        <p><strong>Social Media:</strong> @yourblog</p>
+                        
+                        <p>I try to respond to all messages within a few days. Thanks for your interest in connecting!</p>
+                        
+                        <p><em>Note: Update the contact information above with your actual details.</em></p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 My Simple Blog. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
