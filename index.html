@@ -238,15 +238,15 @@
                 <h2 class="post-title">How This Dynamic Blog Works</h2>
                 <div class="post-meta">System Info</div>
                 <div class="post-excerpt">
-                    <p><strong>To add new blog posts:</strong></p>
+                    <p><strong>Super Easy Blog Management:</strong></p>
                     <ol>
                         <li>Use the "Editor" tab to create your post</li>
-                        <li>Generate the HTML file using the editor</li>
-                        <li>Save the file as <code>your-post-name.html</code></li>
-                        <li>Add the filename to the <code>blogPosts</code> array below in the code</li>
+                        <li>Save the HTML file to your blog folder</li>
+                        <li>Add the filename to the <code>allFiles</code> array in index.html (one simple line!)</li>
                         <li>Commit and push to GitHub Pages</li>
                     </ol>
-                    <p><em>The index page will automatically load and display excerpts from all listed post files!</em></p>
+                    <p><em>The system automatically knows which files are blog posts vs. static pages!</em></p>
+                    <p><strong>Current files being tracked:</strong> about.html, contact.html are automatically excluded. Everything else becomes a blog post!</p>
                 </div>
             </div>
 
@@ -340,12 +340,17 @@
     </div>
 
     <script>
-        // List of blog post files (add new posts here)
-        const blogPosts = [
+        // Configuration: List ALL your HTML files here (the system will auto-detect which are posts)
+        const allFiles = [
             'welcome-post.html',
-            'github-pages-blog.html',
-            'dynamic-loading.html'
+            'github-pages-blog.html', 
+            'dynamic-loading.html',
+            'first.html'
+            // Add any new HTML files here - just the filename!
         ];
+        
+        // Static pages (these won't show as blog posts)
+        const staticPages = ['index.html', 'about.html', 'contact.html'];
 
         function showPage(pageId) {
             // Update navigation
@@ -370,7 +375,11 @@
             const container = document.getElementById('blog-posts-container');
             container.innerHTML = '<div class="loading">Loading blog posts...</div>';
             
+            // Filter out static pages to get only blog posts
+            const blogPosts = allFiles.filter(file => !staticPages.includes(file));
+            
             const postsHtml = [];
+            let hasErrors = false;
             
             for (const postFile of blogPosts) {
                 try {
@@ -379,17 +388,64 @@
                         const html = await response.text();
                         const post = parsePostFromHtml(html, postFile);
                         postsHtml.push(post);
+                    } else {
+                        console.log(`HTTP Error loading ${postFile}:`, response.status);
+                        hasErrors = true;
                     }
                 } catch (error) {
                     console.log(`Could not load ${postFile}:`, error);
+                    hasErrors = true;
                 }
             }
             
-            if (postsHtml.length > 0) {
-                container.innerHTML = postsHtml.join('');
-            } else {
-                container.innerHTML = '<div class="blog-post"><p>No blog posts found. Create your first post using the Editor!</p></div>';
+            let content = '';
+            
+            if (hasErrors && window.location.protocol === 'file:') {
+                content += `
+                    <div class="error">
+                        <h3>⚠️ Local File System Detected</h3>
+                        <p>You're running this locally using file:// protocol. To load blog posts dynamically, you need to run a local web server.</p>
+                        <p><strong>Quick fix:</strong></p>
+                        <ul>
+                            <li>Use Python: <code>python -m http.server 8000</code></li>
+                            <li>Use VS Code Live Server extension</li>
+                            <li>Or upload to GitHub Pages for full functionality</li>
+                        </ul>
+                        <p>Meanwhile, you can still use the Editor to create posts!</p>
+                    </div>
+                `;
             }
+            
+            if (postsHtml.length > 0) {
+                content += postsHtml.join('');
+            } else if (!hasErrors) {
+                content += '<div class="blog-post"><p>No blog posts found. Create your first post using the Editor!</p></div>';
+            }
+            
+            // Show sample posts if nothing loaded
+            if (postsHtml.length === 0 && hasErrors) {
+                content += `
+                    <div class="blog-post">
+                        <h2 class="post-title">Sample: Welcome to My Dynamic Blog</h2>
+                        <div class="post-meta">Posted on May 27, 2025 | By Me</div>
+                        <div class="post-excerpt">
+                            <p>This is what your blog posts will look like once you set up a local server or deploy to GitHub Pages. The system will automatically load and display excerpts from your HTML files.</p>
+                        </div>
+                        <span class="read-more" style="opacity: 0.5;">Read Full Post → (Demo)</span>
+                    </div>
+                    
+                    <div class="blog-post">
+                        <h2 class="post-title">Sample: Using the Built-in Editor</h2>
+                        <div class="post-meta">Posted on May 26, 2025 | By Me</div>
+                        <div class="post-excerpt">
+                            <p>The editor tab lets you create new blog posts with a simple form. It generates complete HTML files that you can save and add to your blog instantly.</p>
+                        </div>
+                        <span class="read-more" style="opacity: 0.5;">Read Full Post → (Demo)</span>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = content;
         }
 
         function parsePostFromHtml(html, filename) {
