@@ -56,9 +56,17 @@
             transition: all 0.3s ease;
         }
 
-        nav a:hover {
+        nav a:hover, nav a.active {
             background-color: #ffff00;
             color: #000000;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
         }
 
         .blog-post {
@@ -107,6 +115,99 @@
             color: #000000;
         }
 
+        .loading {
+            text-align: center;
+            padding: 20px;
+            opacity: 0.7;
+        }
+
+        .error {
+            color: #ff6666;
+            background-color: #330000;
+            padding: 15px;
+            border: 1px solid #ff6666;
+            margin-bottom: 20px;
+        }
+
+        /* Editor Styles */
+        .editor-section {
+            background-color: #222222;
+            border: 2px solid #ffff00;
+            padding: 20px;
+            margin-bottom: 40px;
+        }
+
+        .editor-toggle {
+            background-color: #000000;
+            color: #ffff00;
+            border: 1px solid #ffff00;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .editor-toggle:hover {
+            background-color: #ffff00;
+            color: #000000;
+        }
+
+        .editor-content {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ffff00;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            background-color: #000000;
+            color: #ffff00;
+            border: 1px solid #ffff00;
+            padding: 8px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            height: 300px;
+            resize: vertical;
+        }
+
+        .btn {
+            background-color: #000000;
+            color: #ffff00;
+            border: 1px solid #ffff00;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            background-color: #ffff00;
+            color: #000000;
+        }
+
+        .output-section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #111111;
+            border: 1px solid #ffff00;
+        }
+
+        .output-section pre {
+            background-color: #000000;
+            padding: 15px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-size: 0.9em;
+        }
+
         footer {
             text-align: center;
             margin-top: 60px;
@@ -114,103 +215,323 @@
             border-top: 1px solid #ffff00;
             opacity: 0.7;
         }
-
-        .how-to {
-            background-color: #222222;
-            border: 2px solid #ffff00;
-            padding: 20px;
-            margin-bottom: 40px;
-        }
-
-        .how-to h3 {
-            color: #ffff00;
-            margin-bottom: 15px;
-        }
-
-        .how-to ol {
-            margin-left: 20px;
-        }
-
-        .how-to li {
-            margin-bottom: 8px;
-        }
-
-        .filename {
-            background-color: #333333;
-            padding: 2px 6px;
-            font-family: monospace;
-            color: #ffff00;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>My Simple Blog</h1>
-            <p class="tagline">Sharing thoughts in yellow on black</p>
+            <p class="tagline">Dynamic GitHub Pages Blog</p>
         </header>
 
         <nav>
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
+            <a href="#" onclick="showPage('home')" class="nav-link active">Home</a>
+            <a href="#" onclick="showPage('about')" class="nav-link">About</a>
+            <a href="#" onclick="showPage('contact')" class="nav-link">Contact</a>
+            <a href="#" onclick="showPage('editor')" class="nav-link">Editor</a>
         </nav>
 
-        <!-- Instructions for adding new posts -->
-        <div class="how-to">
-            <h3>How to Add New Blog Posts:</h3>
-            <ol>
-                <li>Create a new HTML file (e.g., <span class="filename">my-new-post.html</span>) using the post template</li>
-                <li>Add your content to the new file</li>
-                <li>Add a new blog post entry below with a link to your new file</li>
-                <li>Upload all files to your web hosting</li>
-            </ol>
-            <p><em>Delete this section when you're ready to go live!</em></p>
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <!-- Blog Post Editor Instructions -->
+            <div class="blog-post">
+                <h2 class="post-title">How This Dynamic Blog Works</h2>
+                <div class="post-meta">System Info</div>
+                <div class="post-excerpt">
+                    <p><strong>To add new blog posts:</strong></p>
+                    <ol>
+                        <li>Use the "Editor" tab to create your post</li>
+                        <li>Generate the HTML file using the editor</li>
+                        <li>Save the file as <code>your-post-name.html</code></li>
+                        <li>Add the filename to the <code>blogPosts</code> array below in the code</li>
+                        <li>Commit and push to GitHub Pages</li>
+                    </ol>
+                    <p><em>The index page will automatically load and display excerpts from all listed post files!</em></p>
+                </div>
+            </div>
+
+            <div id="blog-posts-container">
+                <div class="loading">Loading blog posts...</div>
+            </div>
         </div>
 
-        <main>
-            <!-- Blog Post 1 -->
-            <article class="blog-post">
-                <h2 class="post-title">
-                    <a href="welcome-post.html">Welcome to My Blog</a>
-                </h2>
-                <div class="post-meta">Posted on May 27, 2025 | By Me</div>
-                <div class="post-excerpt">
-                    <p>This is my first blog post! I've created this simple website with a black background and yellow text for easy reading. This minimalist design helps focus on the content without distractions.</p>
+        <!-- About Page -->
+        <div id="about" class="page">
+            <div class="blog-post">
+                <h2 class="post-title">About This Blog</h2>
+                <div class="post-content">
+                    <p>Welcome to my dynamic GitHub Pages blog! This blog automatically loads and displays posts from individual HTML files.</p>
+                    
+                    <p>Features:</p>
+                    <ul>
+                        <li>Automatic post loading and excerpt generation</li>
+                        <li>Built-in post editor</li>
+                        <li>Clean black and yellow design</li>
+                        <li>Fully hosted on GitHub Pages</li>
+                        <li>No database required</li>
+                    </ul>
+                    
+                    <p>The system works by maintaining a list of post filenames and dynamically loading content from each file to create excerpts on the home page.</p>
                 </div>
-                <a href="welcome-post.html" class="read-more">Read Full Post →</a>
-            </article>
+            </div>
+        </div>
 
-            <!-- Blog Post 2 -->
-            <article class="blog-post">
-                <h2 class="post-title">
-                    <a href="design-choice.html">Why I Chose This Design</a>
-                </h2>
-                <div class="post-meta">Posted on May 26, 2025 | By Me</div>
-                <div class="post-excerpt">
-                    <p>The black and yellow color scheme isn't just about aesthetics - it's about readability and reducing eye strain. The high contrast makes text easy to read, especially in low-light conditions.</p>
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <div class="blog-post">
+                <h2 class="post-title">Contact Me</h2>
+                <div class="post-content">
+                    <p>Get in touch with me through any of these channels:</p>
+                    
+                    <p><strong>Email:</strong> your.email@example.com</p>
+                    <p><strong>GitHub:</strong> github.com/yourusername</p>
+                    <p><strong>Social:</strong> @yourblog</p>
+                    
+                    <p>I'd love to hear your thoughts on the posts or suggestions for new topics!</p>
                 </div>
-                <a href="design-choice.html" class="read-more">Read Full Post →</a>
-            </article>
+            </div>
+        </div>
 
-            <!-- Blog Post 3 -->
-            <article class="blog-post">
-                <h2 class="post-title">
-                    <a href="getting-started.html">Getting Started with Blogging</a>
-                </h2>
-                <div class="post-meta">Posted on May 25, 2025 | By Me</div>
-                <div class="post-excerpt">
-                    <p>Starting a blog can seem overwhelming, but it doesn't have to be complicated. Sometimes the simplest approach is the best approach.</p>
+        <!-- Editor Page -->
+        <div id="editor" class="page">
+            <div class="editor-section">
+                <h2>Blog Post Editor</h2>
+                <p>Create new blog posts here. The editor will generate the complete HTML file for you to save and add to GitHub.</p>
+                
+                <div class="form-group">
+                    <label for="post-title">Post Title:</label>
+                    <input type="text" id="post-title" placeholder="Enter your post title">
                 </div>
-                <a href="getting-started.html" class="read-more">Read Full Post →</a>
-            </article>
-
-            <!-- Add new blog posts here by copying the structure above -->
-        </main>
+                
+                <div class="form-group">
+                    <label for="post-author">Author:</label>
+                    <input type="text" id="post-author" value="Me" placeholder="Author name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-date">Date:</label>
+                    <input type="date" id="post-date">
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-filename">Filename (without .html):</label>
+                    <input type="text" id="post-filename" placeholder="my-awesome-post">
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-content">Post Content (HTML):</label>
+                    <textarea id="post-content" placeholder="Write your post content here. You can use HTML tags like &lt;p&gt;, &lt;h2&gt;, &lt;ul&gt;, etc."></textarea>
+                </div>
+                
+                <button class="btn" onclick="generatePost()">Generate HTML File</button>
+                <button class="btn" onclick="clearEditor()">Clear Form</button>
+                
+                <div id="output" class="output-section" style="display: none;">
+                    <h3>Generated HTML File:</h3>
+                    <p>Copy this content and save it as <span id="output-filename"></span></p>
+                    <pre id="generated-html"></pre>
+                </div>
+            </div>
+        </div>
 
         <footer>
             <p>&copy; 2025 My Simple Blog. All rights reserved.</p>
         </footer>
     </div>
+
+    <script>
+        // List of blog post files (add new posts here)
+        const blogPosts = [
+            'welcome-post.html',
+            'github-pages-blog.html',
+            'dynamic-loading.html'
+        ];
+
+        function showPage(pageId) {
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            
+            // Load blog posts if home page
+            if (pageId === 'home') {
+                loadBlogPosts();
+            }
+        }
+
+        async function loadBlogPosts() {
+            const container = document.getElementById('blog-posts-container');
+            container.innerHTML = '<div class="loading">Loading blog posts...</div>';
+            
+            const postsHtml = [];
+            
+            for (const postFile of blogPosts) {
+                try {
+                    const response = await fetch(postFile);
+                    if (response.ok) {
+                        const html = await response.text();
+                        const post = parsePostFromHtml(html, postFile);
+                        postsHtml.push(post);
+                    }
+                } catch (error) {
+                    console.log(`Could not load ${postFile}:`, error);
+                }
+            }
+            
+            if (postsHtml.length > 0) {
+                container.innerHTML = postsHtml.join('');
+            } else {
+                container.innerHTML = '<div class="blog-post"><p>No blog posts found. Create your first post using the Editor!</p></div>';
+            }
+        }
+
+        function parsePostFromHtml(html, filename) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            
+            // Extract title
+            const titleElement = doc.querySelector('.post-title, h1');
+            const title = titleElement ? titleElement.textContent.trim() : filename.replace('.html', '').replace(/-/g, ' ');
+            
+            // Extract date from meta or use filename
+            const metaElement = doc.querySelector('.post-meta');
+            const meta = metaElement ? metaElement.textContent.trim() : 'Recent post';
+            
+            // Extract first paragraph or content
+            const contentElement = doc.querySelector('.post-content, .content');
+            let excerpt = '';
+            if (contentElement) {
+                const firstP = contentElement.querySelector('p');
+                excerpt = firstP ? firstP.textContent.trim() : contentElement.textContent.trim();
+            }
+            
+            // Limit excerpt length
+            if (excerpt.length > 200) {
+                excerpt = excerpt.substring(0, 200) + '...';
+            }
+            
+            return `
+                <article class="blog-post">
+                    <h2 class="post-title">
+                        <a href="${filename}">${title}</a>
+                    </h2>
+                    <div class="post-meta">${meta}</div>
+                    <div class="post-excerpt">
+                        <p>${excerpt}</p>
+                    </div>
+                    <a href="${filename}" class="read-more">Read Full Post →</a>
+                </article>
+            `;
+        }
+
+        // Editor functions
+        function generatePost() {
+            const title = document.getElementById('post-title').value;
+            const author = document.getElementById('post-author').value;
+            const date = document.getElementById('post-date').value;
+            const filename = document.getElementById('post-filename').value;
+            const content = document.getElementById('post-content').value;
+            
+            if (!title || !filename || !content) {
+                alert('Please fill in at least the title, filename, and content fields.');
+                return;
+            }
+            
+            const formattedDate = date ? new Date(date).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            }) : new Date().toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            const htmlTemplate = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title} - My Simple Blog</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #000000; color: #ffff00; font-family: Arial, sans-serif; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #ffff00; padding-bottom: 20px; }
+        .site-title { font-size: 1.8em; margin-bottom: 10px; }
+        .site-title a { color: #ffff00; text-decoration: none; }
+        .site-title a:hover { text-decoration: underline; }
+        nav { text-align: center; margin-bottom: 40px; }
+        nav a { color: #ffff00; text-decoration: none; margin: 0 20px; font-size: 1.1em; border: 1px solid #ffff00; padding: 8px 16px; transition: all 0.3s ease; }
+        nav a:hover { background-color: #ffff00; color: #000000; }
+        .back-button { margin-bottom: 30px; }
+        .back-button a { color: #ffff00; text-decoration: none; border: 1px solid #ffff00; padding: 8px 16px; transition: all 0.3s ease; }
+        .back-button a:hover { background-color: #ffff00; color: #000000; }
+        .post { background-color: #111111; border: 1px solid #ffff00; padding: 30px; }
+        .post-title { font-size: 2.2em; margin-bottom: 15px; color: #ffff00; }
+        .post-meta { font-size: 0.9em; opacity: 0.7; margin-bottom: 25px; border-bottom: 1px dotted #ffff00; padding-bottom: 15px; }
+        .post-content { font-size: 1.1em; }
+        .post-content p { margin-bottom: 20px; }
+        .post-content h2 { color: #ffff00; margin-top: 30px; margin-bottom: 15px; font-size: 1.5em; }
+        .post-content h3 { color: #ffff00; margin-top: 25px; margin-bottom: 10px; font-size: 1.3em; }
+        .post-content ul, .post-content ol { margin-left: 30px; margin-bottom: 20px; }
+        .post-content li { margin-bottom: 8px; }
+        footer { text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #ffff00; opacity: 0.7; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="site-title"><a href="index.html">My Simple Blog</a></h1>
+        </header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="back-button">
+            <a href="index.html">← Back to All Posts</a>
+        </div>
+        <article class="post">
+            <h1 class="post-title">${title}</h1>
+            <div class="post-meta">Posted on ${formattedDate} | By ${author}</div>
+            <div class="post-content">
+${content}
+            </div>
+        </article>
+        <footer>
+            <p>&copy; 2025 My Simple Blog. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>`;
+            
+            document.getElementById('generated-html').textContent = htmlTemplate;
+            document.getElementById('output-filename').textContent = filename + '.html';
+            document.getElementById('output').style.display = 'block';
+        }
+
+        function clearEditor() {
+            document.getElementById('post-title').value = '';
+            document.getElementById('post-author').value = 'Me';
+            document.getElementById('post-date').value = '';
+            document.getElementById('post-filename').value = '';
+            document.getElementById('post-content').value = '';
+            document.getElementById('output').style.display = 'none';
+        }
+
+        // Set today's date as default
+        document.getElementById('post-date').value = new Date().toISOString().split('T')[0];
+
+        // Load blog posts on page load
+        loadBlogPosts();
+    </script>
 </body>
 </html>
