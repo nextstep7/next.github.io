@@ -178,7 +178,43 @@
             }
         }
 
-        function generatePost() { /* unchanged */ }
+function generatePost() {
+    const title = document.getElementById('post-title').value.trim();
+    const author = document.getElementById('post-author').value.trim();
+    const date = document.getElementById('post-date').value;
+    const filename = document.getElementById('post-filename').value.trim();
+    const content = document.getElementById('post-content').value.trim();
+
+    if (!title || !filename || !content) {
+        alert('Please fill in at least the title, filename, and content fields.');
+        return;
+    }
+
+    const formattedDate = date
+        ? new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+        : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    const htmlTemplate = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${title} - My Simple Blog</title>
+</head>
+<body style="background-color: #000; color: #ff0; font-family: Arial; padding: 20px;">
+  <h1 class="post-title">${title}</h1>
+  <div class="post-meta">Posted on ${formattedDate} | By ${author}</div>
+  <div class="post-content">
+${content}
+  </div>
+</body>
+</html>`;
+
+    document.getElementById('generated-html').textContent = htmlTemplate;
+    document.getElementById('output-filename').textContent = filename + '.html';
+    document.getElementById('output').style.display = 'block';
+}
+
         function clearEditor() { /* unchanged */ }
 
         document.getElementById('post-date').value = new Date().toISOString().split('T')[0];
