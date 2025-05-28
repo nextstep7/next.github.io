@@ -518,71 +518,61 @@
             container.innerHTML = content;
         }
 
-        function parsePostFromHtml(html, filename) {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            
-            // Extract title - look for the main post title more specifically
-            let titleElement = doc.querySelector('article .post-title, .post .post-title');
-            if (!titleElement) {
-                // Fallback to any h1 in the main content area
-                titleElement = doc.querySelector('article h1, .post h1, main h1');
-            }
-            if (!titleElement) {
-                // Final fallback to any .post-title or h1
-                titleElement = doc.querySelector('.post-title, h1');
-            }
-            
-            const title = titleElement ? titleElement.textContent.trim() : filename.replace('.html', '').replace(/-/g, ' ');
-            
-            // Extract date from meta or use filename
-            const metaElement = doc.querySelector('.post-meta');
-            const meta = metaElement ? metaElement.textContent.trim() : 'Recent post';
-            
-            // Extract image
-            const imageElement = doc.querySelector('.post-image');
-            const imageHtml = imageElement ? `<img src="${imageElement.src}" alt="${imageElement.alt || title}" class="post-image">` : '';
-            
-            // Extract external links
-            const externalLinks = doc.querySelectorAll('.external-link');
-            let linksHtml = '';
-            if (externalLinks.length > 0) {
-                linksHtml = '<div class="post-links">';
-                externalLinks.forEach(link => {
-                    linksHtml += `<a href="${link.href}" class="external-link" target="_blank">${link.textContent}</a>`;
-                });
-                linksHtml += '</div>';
-            }
-            
-            // Extract first paragraph or content
-            const contentElement = doc.querySelector('.post-content, .content, article, .post');
-            let excerpt = '';
-            if (contentElement) {
-                const firstP = contentElement.querySelector('p');
-                excerpt = firstP ? firstP.textContent.trim() : contentElement.textContent.trim();
-            }
-            
-            // Limit excerpt length
-            if (excerpt.length > 200) {
-                excerpt = excerpt.substring(0, 200) + '...';
-            }
-            
-            return `
-                <article class="blog-post">
-                    ${imageHtml}
-                    <h2 class="post-title">
-                        <a href="${filename}">${title}</a>
-                    </h2>
-                    <div class="post-meta">${meta}</div>
-                    ${linksHtml}
-                    <div class="post-excerpt">
-                        <p>${excerpt}</p>
-                    </div>
-                    <a href="${filename}" class="read-more">Read Full Post →</a>
-                </article>
-            `;
-        }
-
+function parsePostFromHtml(html, filename) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    
+    // Extract title - look for h1.post-title first, then fall back to other selectors
+    const titleElement = doc.querySelector('h1.post-title, .post-title, h1');
+    const title = titleElement ? titleElement.textContent.trim() : filename.replace('.html', '').replace(/-/g, ' ');
+    
+    // Extract date from meta or use filename
+    const metaElement = doc.querySelector('.post-meta');
+    const meta = metaElement ? metaElement.textContent.trim() : 'Recent post';
+    
+    // Extract image
+    const imageElement = doc.querySelector('.post-image');
+    const imageHtml = imageElement ? `<img src="${imageElement.src}" alt="${imageElement.alt || title}" class="post-image">` : '';
+    
+    // Extract external links
+    const externalLinks = doc.querySelectorAll('.external-link');
+    let linksHtml = '';
+    if (externalLinks.length > 0) {
+        linksHtml = '<div class="post-links">';
+        externalLinks.forEach(link => {
+            linksHtml += `<a href="${link.href}" class="external-link" target="_blank">${link.textContent}</a>`;
+        });
+        linksHtml += '</div>';
+    }
+    
+    // Extract first paragraph or content
+    const contentElement = doc.querySelector('.post-content, .content');
+    let excerpt = '';
+    if (contentElement) {
+        const firstP = contentElement.querySelector('p');
+        excerpt = firstP ? firstP.textContent.trim() : contentElement.textContent.trim();
+    }
+    
+    // Limit excerpt length
+    if (excerpt.length > 200) {
+        excerpt = excerpt.substring(0, 200) + '...';
+    }
+    
+    return `
+        <article class="blog-post">
+            ${imageHtml}
+            <h2 class="post-title">
+                <a href="${filename}">${title}</a>
+            </h2>
+            <div class="post-meta">${meta}</div>
+            ${linksHtml}
+            <div class="post-excerpt">
+                <p>${excerpt}</p>
+            </div>
+            <a href="${filename}" class="read-more">Read Full Post →</a>
+        </article>
+    `;
+}
         // Editor functions
         function previewPost() {
             const title = document.getElementById('post-title').value || 'Untitled Post';
