@@ -410,7 +410,6 @@
             'welcome-post.html',
             'github-pages-blog.html', 
             'dynamic-loading.html',
-            'vibe.html',
             'first.html'
             // Add any new HTML files here - just the filename!
         ];
@@ -522,32 +521,6 @@
         function parsePostFromHtml(html, filename) {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
-            
-            // Extract title - try multiple selectors to find the actual header
-            let title = '';
-            const titleSelectors = [
-                'h1.post-title',           // Main post title
-                '.post-title',             // Any element with post-title class
-                'article h1',              // H1 inside article
-                '.post h1',                // H1 inside post div
-                'h1',                      // Any H1
-                'title'                    // HTML title tag as fallback
-            ];
-            
-            for (const selector of titleSelectors) {
-                const titleElement = doc.querySelector(selector);
-                if (titleElement && titleElement.textContent.trim()) {
-                    title = titleElement.textContent.trim();
-                    // Remove "- My Simple Blog" suffix if it exists in title tag
-                    title = title.replace(/ - My Simple Blog$/, '');
-                    break;
-                }
-            }
-            
-            // Fallback to filename if no title found
-            if (!title) {
-                title = filename.replace('.html', '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-            }
             
             // Extract title
             const titleElement = doc.querySelector('.post-title, h1');
