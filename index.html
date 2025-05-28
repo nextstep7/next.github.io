@@ -410,7 +410,6 @@
             'welcome-post.html',
             'github-pages-blog.html', 
             'dynamic-loading.html',
-            'vibe.html',
             'first.html'
             // Add any new HTML files here - just the filename!
         ];
@@ -523,8 +522,17 @@
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
             
-            // Extract title
-            const titleElement = doc.querySelector('.post-title, h1');
+            // Extract title - look for the main post title more specifically
+            let titleElement = doc.querySelector('article .post-title, .post .post-title');
+            if (!titleElement) {
+                // Fallback to any h1 in the main content area
+                titleElement = doc.querySelector('article h1, .post h1, main h1');
+            }
+            if (!titleElement) {
+                // Final fallback to any .post-title or h1
+                titleElement = doc.querySelector('.post-title, h1');
+            }
+            
             const title = titleElement ? titleElement.textContent.trim() : filename.replace('.html', '').replace(/-/g, ' ');
             
             // Extract date from meta or use filename
@@ -547,7 +555,7 @@
             }
             
             // Extract first paragraph or content
-            const contentElement = doc.querySelector('.post-content, .content');
+            const contentElement = doc.querySelector('.post-content, .content, article, .post');
             let excerpt = '';
             if (contentElement) {
                 const firstP = contentElement.querySelector('p');
@@ -714,48 +722,4 @@
         </header>
         <nav>
             <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
-        </nav>
-        <div class="back-button">
-            <a href="index.html">← Back to All Posts</a>
-        </div>
-        <article class="post">${imageHtml}
-            <h1 class="post-title">${title}</h1>
-            <div class="post-meta">Posted on ${formattedDate} | By ${author}</div>${linksHtml}
-            <div class="post-content">
-${content}
-            </div>
-        </article>
-        <footer>
-            <p>&copy; 2025 My Simple Blog. All rights reserved.</p>
-        </footer>
-    </div>
-</body>
-</html>`;
             
-            document.getElementById('generated-html').textContent = htmlTemplate;
-            document.getElementById('output-filename').textContent = filename + '.html';
-            document.getElementById('output').style.display = 'block';
-        }
-
-        function clearEditor() {
-            document.getElementById('post-title').value = '';
-            document.getElementById('post-author').value = 'Me';
-            document.getElementById('post-date').value = '';
-            document.getElementById('post-filename').value = '';
-            document.getElementById('post-image').value = '';
-            document.getElementById('post-links').value = '';
-            document.getElementById('post-content').value = '';
-            document.getElementById('output').style.display = 'none';
-            document.getElementById('preview').style.display = 'none';
-        }
-
-        // Set today's date as default
-        document.getElementById('post-date').value = new Date().toISOString().split('T')[0];
-
-        // Load blog posts on page load
-        loadBlogPosts();
-    </script>
-</body>
-</html>
