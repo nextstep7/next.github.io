@@ -74,6 +74,15 @@
             padding: 20px;
             border: 1px solid #ffff00;
             background-color: #111111;
+            position: relative;
+        }
+
+        .post-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 1px solid #ffff00;
         }
 
         .post-title {
@@ -99,6 +108,32 @@
 
         .post-excerpt {
             margin-bottom: 15px;
+        }
+
+        .post-links {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .external-link {
+            color: #ffff00;
+            text-decoration: none;
+            border: 1px solid #ffff00;
+            padding: 4px 8px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .external-link:hover {
+            background-color: #ffff00;
+            color: #000000;
+        }
+
+        .external-link::before {
+            content: "🔗 ";
         }
 
         .read-more {
@@ -137,24 +172,6 @@
             margin-bottom: 40px;
         }
 
-        .editor-toggle {
-            background-color: #000000;
-            color: #ffff00;
-            border: 1px solid #ffff00;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-
-        .editor-toggle:hover {
-            background-color: #ffff00;
-            color: #000000;
-        }
-
-        .editor-content {
-            display: none;
-        }
-
         .form-group {
             margin-bottom: 15px;
         }
@@ -163,6 +180,13 @@
             display: block;
             margin-bottom: 5px;
             color: #ffff00;
+            font-weight: bold;
+        }
+
+        .form-group .help-text {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-bottom: 5px;
         }
 
         .form-group input, .form-group textarea {
@@ -179,6 +203,18 @@
             resize: vertical;
         }
 
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .btn {
             background-color: #000000;
             color: #ffff00;
@@ -186,6 +222,7 @@
             padding: 10px 20px;
             cursor: pointer;
             margin-right: 10px;
+            margin-bottom: 10px;
         }
 
         .btn:hover {
@@ -235,18 +272,18 @@
         <div id="home" class="page active">
             <!-- Blog Post Editor Instructions -->
             <div class="blog-post">
-                <h2 class="post-title">How This Dynamic Blog Works</h2>
+                <h2 class="post-title">How This Enhanced Dynamic Blog Works</h2>
                 <div class="post-meta">System Info</div>
                 <div class="post-excerpt">
-                    <p><strong>Super Easy Blog Management:</strong></p>
+                    <p><strong>Super Easy Blog Management with New Features:</strong></p>
                     <ol>
                         <li>Use the "Editor" tab to create your post</li>
+                        <li>Add optional images and external links</li>
                         <li>Save the HTML file to your blog folder</li>
                         <li>Add the filename to the <code>allFiles</code> array in index.html (one simple line!)</li>
                         <li>Commit and push to GitHub Pages</li>
                     </ol>
-                    <p><em>The system automatically knows which files are blog posts vs. static pages!</em></p>
-                    <p><strong>Current files being tracked:</strong> about.html, contact.html are automatically excluded. Everything else becomes a blog post!</p>
+                    <p><em>New features: Optional post images and external reference links!</em></p>
                 </div>
             </div>
 
@@ -258,11 +295,19 @@
         <!-- About Page -->
         <div id="about" class="page">
             <div class="blog-post">
-                <h2 class="post-title">About This Blog</h2>
+                <h2 class="post-title">About This Enhanced Blog</h2>
                 <div class="post-content">
-                    <p>Welcome to my dynamic GitHub Pages blog! This blog automatically loads and displays posts from individual HTML files.</p>
+                    <p>Welcome to my enhanced dynamic GitHub Pages blog! This blog automatically loads and displays posts from individual HTML files.</p>
                     
-                    <p>Features:</p>
+                    <p>New Features:</p>
+                    <ul>
+                        <li>Optional post images with automatic resizing</li>
+                        <li>External reference links for sources and related content</li>
+                        <li>Enhanced post editor with improved layout</li>
+                        <li>Responsive design for mobile and desktop</li>
+                    </ul>
+
+                    <p>Existing Features:</p>
                     <ul>
                         <li>Automatic post loading and excerpt generation</li>
                         <li>Built-in post editor</li>
@@ -295,27 +340,41 @@
         <!-- Editor Page -->
         <div id="editor" class="page">
             <div class="editor-section">
-                <h2>Blog Post Editor</h2>
-                <p>Create new blog posts here. The editor will generate the complete HTML file for you to save and add to GitHub.</p>
+                <h2>Enhanced Blog Post Editor</h2>
+                <p>Create new blog posts with optional images and external links. The editor will generate the complete HTML file for you to save and add to GitHub.</p>
                 
                 <div class="form-group">
                     <label for="post-title">Post Title:</label>
                     <input type="text" id="post-title" placeholder="Enter your post title">
                 </div>
                 
-                <div class="form-group">
-                    <label for="post-author">Author:</label>
-                    <input type="text" id="post-author" value="Me" placeholder="Author name">
-                </div>
-                
-                <div class="form-group">
-                    <label for="post-date">Date:</label>
-                    <input type="date" id="post-date">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="post-author">Author:</label>
+                        <input type="text" id="post-author" value="Me" placeholder="Author name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="post-date">Date:</label>
+                        <input type="date" id="post-date">
+                    </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="post-filename">Filename (without .html):</label>
                     <input type="text" id="post-filename" placeholder="my-awesome-post">
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-image">Post Image URL (optional):</label>
+                    <div class="help-text">Enter a URL to an image (JPG, PNG, etc.) to display at the top of your post</div>
+                    <input type="url" id="post-image" placeholder="https://example.com/image.jpg">
+                </div>
+                
+                <div class="form-group">
+                    <label for="post-links">External Links (optional):</label>
+                    <div class="help-text">Enter URLs separated by commas for reference links, sources, or related content</div>
+                    <input type="text" id="post-links" placeholder="https://example.com/source1, https://example.com/reference2">
                 </div>
                 
                 <div class="form-group">
@@ -325,6 +384,12 @@
                 
                 <button class="btn" onclick="generatePost()">Generate HTML File</button>
                 <button class="btn" onclick="clearEditor()">Clear Form</button>
+                <button class="btn" onclick="previewPost()">Preview Post</button>
+                
+                <div id="preview" class="output-section" style="display: none;">
+                    <h3>Post Preview:</h3>
+                    <div id="preview-content"></div>
+                </div>
                 
                 <div id="output" class="output-section" style="display: none;">
                     <h3>Generated HTML File:</h3>
@@ -345,7 +410,6 @@
             'welcome-post.html',
             'github-pages-blog.html', 
             'dynamic-loading.html',
-            'vibecode.html',
             'first.html'
             // Add any new HTML files here - just the filename!
         ];
@@ -427,19 +491,24 @@
             if (postsHtml.length === 0 && hasErrors) {
                 content += `
                     <div class="blog-post">
-                        <h2 class="post-title">Sample: Welcome to My Dynamic Blog</h2>
+                        <img src="https://via.placeholder.com/600x200/000000/ffff00?text=Sample+Post+Image" alt="Sample post" class="post-image">
+                        <h2 class="post-title">Sample: Welcome to My Enhanced Dynamic Blog</h2>
                         <div class="post-meta">Posted on May 27, 2025 | By Me</div>
+                        <div class="post-links">
+                            <a href="#" class="external-link">Sample Reference</a>
+                            <a href="#" class="external-link">Related Article</a>
+                        </div>
                         <div class="post-excerpt">
-                            <p>This is what your blog posts will look like once you set up a local server or deploy to GitHub Pages. The system will automatically load and display excerpts from your HTML files.</p>
+                            <p>This is what your enhanced blog posts will look like with optional images and external links. The system automatically displays them in an attractive format.</p>
                         </div>
                         <span class="read-more" style="opacity: 0.5;">Read Full Post → (Demo)</span>
                     </div>
                     
                     <div class="blog-post">
-                        <h2 class="post-title">Sample: Using the Built-in Editor</h2>
+                        <h2 class="post-title">Sample: Using the Enhanced Editor</h2>
                         <div class="post-meta">Posted on May 26, 2025 | By Me</div>
                         <div class="post-excerpt">
-                            <p>The editor tab lets you create new blog posts with a simple form. It generates complete HTML files that you can save and add to your blog instantly.</p>
+                            <p>The enhanced editor now includes fields for optional images and external reference links, making your posts more engaging and informative.</p>
                         </div>
                         <span class="read-more" style="opacity: 0.5;">Read Full Post → (Demo)</span>
                     </div>
@@ -461,6 +530,21 @@
             const metaElement = doc.querySelector('.post-meta');
             const meta = metaElement ? metaElement.textContent.trim() : 'Recent post';
             
+            // Extract image
+            const imageElement = doc.querySelector('.post-image');
+            const imageHtml = imageElement ? `<img src="${imageElement.src}" alt="${imageElement.alt || title}" class="post-image">` : '';
+            
+            // Extract external links
+            const externalLinks = doc.querySelectorAll('.external-link');
+            let linksHtml = '';
+            if (externalLinks.length > 0) {
+                linksHtml = '<div class="post-links">';
+                externalLinks.forEach(link => {
+                    linksHtml += `<a href="${link.href}" class="external-link" target="_blank">${link.textContent}</a>`;
+                });
+                linksHtml += '</div>';
+            }
+            
             // Extract first paragraph or content
             const contentElement = doc.querySelector('.post-content, .content');
             let excerpt = '';
@@ -476,10 +560,12 @@
             
             return `
                 <article class="blog-post">
+                    ${imageHtml}
                     <h2 class="post-title">
                         <a href="${filename}">${title}</a>
                     </h2>
                     <div class="post-meta">${meta}</div>
+                    ${linksHtml}
                     <div class="post-excerpt">
                         <p>${excerpt}</p>
                     </div>
@@ -489,11 +575,63 @@
         }
 
         // Editor functions
+        function previewPost() {
+            const title = document.getElementById('post-title').value || 'Untitled Post';
+            const author = document.getElementById('post-author').value || 'Anonymous';
+            const date = document.getElementById('post-date').value;
+            const imageUrl = document.getElementById('post-image').value;
+            const linksText = document.getElementById('post-links').value;
+            const content = document.getElementById('post-content').value || '<p>No content yet...</p>';
+            
+            const formattedDate = date ? new Date(date).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            }) : new Date().toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            // Parse links
+            let linksHtml = '';
+            if (linksText.trim()) {
+                const links = linksText.split(',').map(link => link.trim()).filter(link => link);
+                if (links.length > 0) {
+                    linksHtml = '<div class="post-links">';
+                    links.forEach(link => {
+                        const linkText = new URL(link).hostname;
+                        linksHtml += `<a href="${link}" class="external-link" target="_blank">${linkText}</a>`;
+                    });
+                    linksHtml += '</div>';
+                }
+            }
+            
+            const imageHtml = imageUrl ? `<img src="${imageUrl}" alt="${title}" class="post-image">` : '';
+            
+            const previewHtml = `
+                <div class="blog-post">
+                    ${imageHtml}
+                    <h2 class="post-title">${title}</h2>
+                    <div class="post-meta">Posted on ${formattedDate} | By ${author}</div>
+                    ${linksHtml}
+                    <div class="post-content">
+                        ${content}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('preview-content').innerHTML = previewHtml;
+            document.getElementById('preview').style.display = 'block';
+        }
+
         function generatePost() {
             const title = document.getElementById('post-title').value;
             const author = document.getElementById('post-author').value;
             const date = document.getElementById('post-date').value;
             const filename = document.getElementById('post-filename').value;
+            const imageUrl = document.getElementById('post-image').value;
+            const linksText = document.getElementById('post-links').value;
             const content = document.getElementById('post-content').value;
             
             if (!title || !filename || !content) {
@@ -510,6 +648,26 @@
                 month: 'long', 
                 day: 'numeric' 
             });
+            
+            // Parse links
+            let linksHtml = '';
+            if (linksText.trim()) {
+                const links = linksText.split(',').map(link => link.trim()).filter(link => link);
+                if (links.length > 0) {
+                    linksHtml = '\n            <div class="post-links">';
+                    links.forEach(link => {
+                        try {
+                            const linkText = new URL(link).hostname;
+                            linksHtml += `\n                <a href="${link}" class="external-link" target="_blank">${linkText}</a>`;
+                        } catch (e) {
+                            linksHtml += `\n                <a href="${link}" class="external-link" target="_blank">${link}</a>`;
+                        }
+                    });
+                    linksHtml += '\n            </div>';
+                }
+            }
+            
+            const imageHtml = imageUrl ? `\n            <img src="${imageUrl}" alt="${title}" class="post-image">` : '';
             
             const htmlTemplate = `<!DOCTYPE html>
 <html lang="en">
@@ -532,8 +690,13 @@
         .back-button a { color: #ffff00; text-decoration: none; border: 1px solid #ffff00; padding: 8px 16px; transition: all 0.3s ease; }
         .back-button a:hover { background-color: #ffff00; color: #000000; }
         .post { background-color: #111111; border: 1px solid #ffff00; padding: 30px; }
+        .post-image { width: 100%; max-height: 400px; object-fit: cover; margin-bottom: 20px; border: 1px solid #ffff00; }
         .post-title { font-size: 2.2em; margin-bottom: 15px; color: #ffff00; }
         .post-meta { font-size: 0.9em; opacity: 0.7; margin-bottom: 25px; border-bottom: 1px dotted #ffff00; padding-bottom: 15px; }
+        .post-links { margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .external-link { color: #ffff00; text-decoration: none; border: 1px solid #ffff00; padding: 6px 12px; font-size: 0.9em; transition: all 0.3s ease; display: inline-block; }
+        .external-link:hover { background-color: #ffff00; color: #000000; }
+        .external-link::before { content: "🔗 "; }
         .post-content { font-size: 1.1em; }
         .post-content p { margin-bottom: 20px; }
         .post-content h2 { color: #ffff00; margin-top: 30px; margin-bottom: 15px; font-size: 1.5em; }
@@ -556,9 +719,9 @@
         <div class="back-button">
             <a href="index.html">← Back to All Posts</a>
         </div>
-        <article class="post">
+        <article class="post">${imageHtml}
             <h1 class="post-title">${title}</h1>
-            <div class="post-meta">Posted on ${formattedDate} | By ${author}</div>
+            <div class="post-meta">Posted on ${formattedDate} | By ${author}</div>${linksHtml}
             <div class="post-content">
 ${content}
             </div>
@@ -580,8 +743,11 @@ ${content}
             document.getElementById('post-author').value = 'Me';
             document.getElementById('post-date').value = '';
             document.getElementById('post-filename').value = '';
+            document.getElementById('post-image').value = '';
+            document.getElementById('post-links').value = '';
             document.getElementById('post-content').value = '';
             document.getElementById('output').style.display = 'none';
+            document.getElementById('preview').style.display = 'none';
         }
 
         // Set today's date as default
