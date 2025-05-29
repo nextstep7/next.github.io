@@ -245,6 +245,32 @@
             font-size: 0.9em;
         }
 
+        .instructions-section {
+            background-color: #333333;
+            border: 2px solid #ffff00;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .instructions-section h3 {
+            color: #ffff00;
+            margin-bottom: 15px;
+        }
+
+        .instructions-section ol {
+            margin-left: 20px;
+        }
+
+        .instructions-section li {
+            margin-bottom: 8px;
+        }
+
+        .instructions-section code {
+            background-color: #000000;
+            padding: 2px 6px;
+            border: 1px solid #ffff00;
+        }
+
         footer {
             text-align: center;
             margin-top: 60px;
@@ -270,23 +296,6 @@
 
         <!-- Home Page -->
         <div id="home" class="page active">
-            <!-- Blog Post Editor Instructions -->
-            <div class="blog-post">
-                <h2 class="post-title">How This Enhanced Dynamic Blog Works</h2>
-                <div class="post-meta">System Info</div>
-                <div class="post-excerpt">
-                    <p><strong>Super Easy Blog Management with New Features:</strong></p>
-                    <ol>
-                        <li>Use the "Editor" tab to create your post</li>
-                        <li>Add optional images and external links</li>
-                        <li>Save the HTML file to your blog folder</li>
-                        <li>Add the filename to the <code>allFiles</code> array in index.html (one simple line!)</li>
-                        <li>Commit and push to GitHub Pages</li>
-                    </ol>
-                    <p><em>New features: Optional post images and external reference links!</em></p>
-                </div>
-            </div>
-
             <div id="blog-posts-container">
                 <div class="loading">Loading blog posts...</div>
             </div>
@@ -397,6 +406,20 @@
                     <pre id="generated-html"></pre>
                 </div>
             </div>
+
+            <!-- Instructions moved here from home page -->
+            <div class="instructions-section">
+                <h3>How This Enhanced Dynamic Blog Works</h3>
+                <p><strong>Super Easy Blog Management with New Features:</strong></p>
+                <ol>
+                    <li>Use the "Editor" above to create your post</li>
+                    <li>Add optional images and external links</li>
+                    <li>Save the HTML file to your blog folder</li>
+                    <li>Add the filename to the <code>allFiles</code> array in index.html (one simple line!)</li>
+                    <li>Commit and push to GitHub Pages</li>
+                </ol>
+                <p><em>New features: Optional post images and external reference links!</em></p>
+            </div>
         </div>
 
         <footer>
@@ -410,7 +433,7 @@
             'welcome-post.html',
             'github-pages-blog.html', 
             'dynamic-loading.html',
-            'quality.html',
+	    'quality.html',
             'vibe2.html',
             'vibe.html',
             'first.html'
