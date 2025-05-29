@@ -410,6 +410,7 @@
             'welcome-post.html',
             'github-pages-blog.html', 
             'dynamic-loading.html',
+            'vibe2.html',
             'vibe.html',
             'first.html'
             // Add any new HTML files here - just the filename!
@@ -524,8 +525,18 @@ function parsePostFromHtml(html, filename) {
     const doc = parser.parseFromString(html, 'text/html');
     
     // Extract title - look for h1.post-title first, then fall back to other selectors
-    const titleElement = doc.querySelector('h1.post-title, .post-title, h1');
-    const title = titleElement ? titleElement.textContent.trim() : filename.replace('.html', '').replace(/-/g, ' ');
+    const titleElement = doc.querySelector('h1.post-title, .post-title, h1, h2, title');
+    let title = '';
+    if (titleElement) {
+        title = titleElement.textContent.trim();
+        // If we got the title from <title> tag, clean it up
+        if (titleElement.tagName === 'TITLE') {
+            title = title.replace(' - My Simple Blog', '').trim();
+        }
+    } else {
+        // Fallback to filename
+        title = filename.replace('.html', '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    }
     
     // Extract date from meta or use filename
     const metaElement = doc.querySelector('.post-meta');
@@ -757,4 +768,4 @@ ${content}
         loadBlogPosts();
     </script>
 </body>
-</html>            
+</html>
